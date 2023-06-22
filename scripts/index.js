@@ -17,16 +17,16 @@ function weebhookMessage(messageContent = undefined, embeds = undefined) {
     request.setHeaders([new HttpHeader("Content-Type", "application/json")]);
     http.request(request);
 };
-world.events.beforeChat.subscribe((arg) => { weebhookMessage(`[Minecraft] ${arg.sender.name}: ${arg.message}`); });
-world.events.playerJoin.subscribe((arg) => { weebhookMessage(undefined, [{ "title": `**${arg.playerName}**`, "color": 65280, "description": "Has joined the server!" }]); });
-world.events.playerLeave.subscribe((arg) => { weebhookMessage(undefined, [{ "title": `**${arg.playerName}**`, "color": 16711680, "description": "Has left the server!" }]); });
+world.afterEvents.chatSend.subscribe((arg) => { weebhookMessage(`[Minecraft] ${arg.sender.name}: ${arg.message}`); });
+world.afterEvents.playerJoin.subscribe((arg) => { weebhookMessage(undefined, [{ "title": `**${arg.playerName}**`, "color": 65280, "description": "Has joined the server!" }]); });
+world.afterEvents.playerLeave.subscribe((arg) => { weebhookMessage(undefined, [{ "title": `**${arg.playerName}**`, "color": 16711680, "description": "Has left the server!" }]); });
 function parseKillerName(name) {
     const newName = name
         .replace(/§./g, '')
         .replace(/(\n).+/, '');
     return newName;
 };
-world.events.entityDie.subscribe((arg) => {
+world.afterEvents.entityDie.subscribe((arg) => {
     if (arg.deadEntity.typeId != 'minecraft:player') {
         return;
     };
@@ -59,6 +59,6 @@ world.events.entityDie.subscribe((arg) => {
         };
         weebhookMessage(undefined, embed);
     } catch (error) {
-        world.sendMessage(`Internal CraftLink error. You may report this to CibNumeritos#1094 (Discord).\n${error}, ${error.stack}`);
+        world.sendMessage(`Internal CraftLink error. You may report this to nxmberscib#1094 (Discord).\n${error}, ${error.stack}`);
     };
 });
