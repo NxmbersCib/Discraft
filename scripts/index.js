@@ -59,6 +59,6 @@ world.afterEvents.entityDie.subscribe((arg) => {
         };
         weebhookMessage(undefined, embed);
     } catch (error) {
-        world.sendMessage(`Internal CraftLink error. You may report this to nxmberscib#1094 (Discord).\n${error}, ${error.stack}`);
+        world.sendMessage(`Internal Discraft error. You may report this to nxmberscib#1094 (Discord).\n${error}, ${error.stack}`);
     };
 });
