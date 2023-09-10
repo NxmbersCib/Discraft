@@ -2,7 +2,7 @@ import { system, world } from '@minecraft/server';
 import { HttpRequest, http, HttpRequestMethod, HttpHeader } from '@minecraft/server-net';
 import { deathMessages } from './IDeathMessages';
 import { webHookURL } from './setup';
-system.events.beforeWatchdogTerminate.subscribe((arg) => arg.cancel = true);
+system.beforeEvents.watchdogTerminate.subscribe((arg) => arg.cancel = true);
 function weebhookMessage(messageContent = undefined, embeds = undefined) {
     const request = new HttpRequest(webHookURL);
     const body = {};
@@ -12,7 +12,7 @@ function weebhookMessage(messageContent = undefined, embeds = undefined) {
     if (embeds) {
         body['embeds'] = embeds;
     };
-    request.setMethod(HttpRequestMethod.POST);
+    request.setMethod(HttpRequestMethod.Post);
     request.setBody(JSON.stringify(body));
     request.setHeaders([new HttpHeader("Content-Type", "application/json")]);
     http.request(request);
@@ -59,6 +59,6 @@ world.afterEvents.entityDie.subscribe((arg) => {
         };
         weebhookMessage(undefined, embed);
     } catch (error) {
-        world.sendMessage(`Internal Discraft error. You may report this to nxmberscib#1094 (Discord).\n${error}, ${error.stack}`);
+        world.sendMessage(`Internal Discraft error. You may report this to nxmberscib (Discord).\n${error}, ${error.stack}`);
     };
 });
